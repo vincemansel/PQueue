@@ -87,11 +87,12 @@ int PQueue::size()
  */
 void PQueue::enqueue(int newValue)
 {
+    cout << "PQueue::enqueue(" << newValue << "):";
  	BlockT *cur, *prev;
     //int *newOne = new int[MaxElemsPerBlock];
  	
     if (head == NULL) {
-        cout << "PQueue::enqueue IN" << endl;
+        cout << "New Head:";
         head = new BlockT;
         head->block = new int[MaxElemsPerBlock];
         head->first = MaxElemsPerBlock/2;  // Mid-point insertion strategy
@@ -126,47 +127,47 @@ void PQueue::enqueue(int newValue)
     //            shift elements down
     //          insert newValue in current cell
     
+ 	for (prev = NULL, cur = head; cur != NULL; prev=cur, cur = cur->next) {
+ 		if (newValue > cur->block[cur->first]) {
+            // Go to previous block and insert element there
+            if (prev) 
+                cur = prev;
+            else {
+                cur = head;
+            }
+            break;
+        }
+ 	}
     
- 	
-// 	for (prev = NULL, cur = head; cur != NULL; prev=cur, cur = cur->next) {
-// 		if (newValue > cur->block[cur->first]) {
-//            // Go to previous block and insert element there
-//            break;
+    if (cur == NULL) { // Back of the list
+        cur = prev;
+    }
+    
+//    if (bSize(cur) == MaxElemsPerBlock) {
+//        cout << " Handling case size()==Max (Create New Block Before)" << endl;
+//        BlockT * newBlock = new BlockT;
+//        BlockT * forwardBlock = cur;
+//        newBlock->block = new int[MaxElemsPerBlock];
+//        newBlock->next = cur->next;
+//        cur = newBlock;
+//        cur->first = MaxElemsPerBlock/2;  // Mid-point insertion strategy
+//        cur->last =  MaxElemsPerBlock/2;
+//        cur->block[cur->first] = newValue;
+//        cur->next = forwardBlock;
+//        if (prev == NULL) {
+//            head = cur;
 //        }
 //        else {
-//            break;
+//            prev->next = cur;
 //        }
-// 	}
-//    
-//    if (prev) 
-//        prev->next = newBlock;
-//    else {
-//        head = newBlock;
 //    }
-    
-    cur = head;
-    prev = head;
-    
-    if (bSize(cur) == MaxElemsPerBlock) {
-        cout << "PQueue::enqueue(): Handling case size()==Max (Create New Block Only)" << endl;
-        BlockT * newBlock = new BlockT;
-        BlockT * forwardBlock = cur;
-        newBlock->block = new int[MaxElemsPerBlock];
-        newBlock->next = cur->next;
-        cur = newBlock;
-        cur->first = MaxElemsPerBlock/2;  // Mid-point insertion strategy
-        cur->last =  MaxElemsPerBlock/2;
-        cur->block[cur->first] = newValue;
-        cur->next = forwardBlock;
-        head = cur; // Special case only
-    }
-    else if (newValue > cur->block[cur->first]) {
+    if (newValue > cur->block[cur->first]) {
         if (cur->first > 0) { 
             cur->first -= 1;
             cur->block[cur->first] = newValue;
         }
         else {
-            cout << "PQueue::enqueue(): Handling Block First Overflow: Create New Block Only)" << endl;
+            cout << " Handling Block First Overflow: Create New Block Before)" << endl;
             BlockT * newBlock = new BlockT;
             BlockT * forwardBlock = cur;
             newBlock->block = new int[MaxElemsPerBlock];
@@ -176,7 +177,12 @@ void PQueue::enqueue(int newValue)
             cur->last =  MaxElemsPerBlock/2;
             cur->block[cur->first] = newValue;
             cur->next = forwardBlock;
-            head = cur; // special case only
+            if (prev == NULL) {
+                head = cur;
+            }
+            else {
+                prev->next = cur;
+            }
         }
     }
     else {
@@ -193,37 +199,16 @@ void PQueue::enqueue(int newValue)
                 }
             }
             else {
-                cout << "PQueue::enqueue(): Handling Block LAST Overflow: Create New Block and Split)" << endl;
-                
+                cout << " Handling Block LAST Overflow: Create New Block After & Split Current, write new value in current)" << endl;
+                // TODO: Create New Block After & Split Current, write new value in current
                 BlockT * newBlock = new BlockT;
-                BlockT * prevBlock = cur;
-
                 newBlock->block = new int[MaxElemsPerBlock];
+                newBlock->first = MaxElemsPerBlock/2;
+                newBlock->last = MaxElemsPerBlock/2;
+                newBlock->block[newBlock->first] = newValue;
                 newBlock->next = cur->next;
+                cur->next = newBlock;
                 
-                cur = newBlock;
-                
-                // This is a brute force strategy that does not work for half-filled initial current (prevBlock) Blocks;
-                cur->first = 0;  // Top-point insertion strategy for splits - easy
-                cur->last =  MaxElemsPerBlock/2 - 1;
-                
-                // Copy previous bottom to current top
-                
-                for (int i = 0; i < MaxElemsPerBlock/2; i++) {
-                    cur->block[i] = prev->block[i+MaxElemsPerBlock/2];
-                }
-                
-                // For testing
-                for (int i = MaxElemsPerBlock/2; i < MaxElemsPerBlock; i++) {
-                    prev->block[i] = -107809;
-                }
-                
-                prevBlock->first = 0;  // Top-point insertion strategy for splits - easy
-                prevBlock->last =  MaxElemsPerBlock/2 ;
-
-                prevBlock->block[prev->last] = newValue;
-                head = prevBlock; // special case only
-
                 break;
             }
         }

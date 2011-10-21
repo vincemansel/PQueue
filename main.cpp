@@ -15,6 +15,21 @@
  * Comment out those tests you aren't interested in running
  * while you are mid-development.
  */
+
+void EnQ(PQueue &pq, int value, int & count) {
+    pq.enqueue(value
+               
+               
+               
+               \
+               );
+    cout << "Size = " << pq.size() << ":" << ++count << endl;
+}
+void DeQ(PQueue &pq, int & count) {
+    cout << "DeQ = " << pq.dequeueMax() << endl;
+    cout << "Size = " << pq.size() << ":" << --count << endl;   
+}
+
 int main()
 {
     PQueue basic;
@@ -22,133 +37,63 @@ int main()
     cout << "Before Enqueue: IsEmpty = " << basic.isEmpty() << endl;
     cout << "Before Enqueue: Size = " << basic.size() << endl;
 
-    basic.enqueue(66);
-    cout << "Size = " << basic.size() << endl;
-    basic.enqueue(55);
-    cout << "Size = " << basic.size() << endl;
-    basic.enqueue(44);
-    cout << "Size = " << basic.size() << endl;
-    basic.enqueue(33);
-    cout << "Size = " << basic.size() << endl;
-    basic.enqueue(22);
-    cout << "Size = " << basic.size() << endl;
-    basic.enqueue(11);
-    cout << "Size = " << basic.size() << endl;
-
-//    basic.enqueue(77);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(88);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(99);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(1010);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(1313);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(1414);
-//    cout << "Size = " << basic.size() << endl;
+    int qSize = 0;
     
+    EnQ(basic,66,qSize);
+    EnQ(basic,55,qSize);
+    EnQ(basic,33,qSize);
+    EnQ(basic,44,qSize);
+    EnQ(basic,22,qSize);
+    EnQ(basic,11,qSize);
+    EnQ(basic,77,qSize);
+    EnQ(basic,88,qSize);
+    EnQ(basic,99,qSize);
+    EnQ(basic,1010,qSize);
+    EnQ(basic,1313,qSize);
+    EnQ(basic,1414,qSize);
+
+    cout << endl;
     cout << "IsEmpty = " << basic.isEmpty() << endl;
     cout << "Size = " << basic.size() << endl;
-
-    cout << "DeQ = " << basic.dequeueMax() << endl;
-    cout << "Size = " << basic.size() << endl;    
-    cout << "DeQ = " << basic.dequeueMax() << endl;
-    cout << "Size = " << basic.size() << endl;
-    cout << "DeQ = " << basic.dequeueMax() << endl;
-    cout << "Size = " << basic.size() << endl;
-    cout << "DeQ = " << basic.dequeueMax() << endl;
-    cout << "Size = " << basic.size() << endl;
-    cout << "DeQ = " << basic.dequeueMax() << endl;
-    cout << "Size = " << basic.size() << endl;
-    cout << "DeQ = " << basic.dequeueMax() << endl;
-    cout << "Size = " << basic.size() << endl;
-
-
-
-
+    cout << endl;
     
-//    basic.enqueue(33);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(22);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(11);
-//    cout << "Size = " << basic.size() << endl;
-//    
-//    basic.enqueue(-11);
-//    cout << "Size = " << basic.size() << endl;
-//    cout << endl;
-//    
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(33);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(32);
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(1212);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(1313);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(1414);
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;    
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(1212);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(1414);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(33);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(1313);
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(44);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(66);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(55);
-//    cout << "Size = " << basic.size() << endl;
-//    basic.enqueue(1717);
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//    cout << "DeQ = " << basic.dequeueMax() << endl;
-//    cout << "Size = " << basic.size() << endl;
-//
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
 
+    cout << endl;
 
-
-    //cout << "DeQ = " << basic.dequeueMax() << endl; // Should Error out
+    EnQ(basic,34,qSize);
+    EnQ(basic,21,qSize);
+    EnQ(basic,10,qSize);
+    EnQ(basic,-11,qSize);
+    
+    cout << endl;    DeQ(basic, qSize);    
+    DeQ(basic, qSize);
+    EnQ(basic,32,qSize);
+    EnQ(basic,23,qSize);
+    DeQ(basic, qSize);
+    EnQ(basic,1212,qSize);
+    EnQ(basic,1313,qSize);
+    EnQ(basic,1414,qSize);
+    
+    cout << endl;
+    
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
+    DeQ(basic, qSize);
     
     
     
