@@ -20,7 +20,8 @@
 #include "genlib.h"
 #include <iostream>
 
-const int MaxElemsPerBlock = 10;
+const int MaxElemsPerBlock = 16;
+const int InsertionPoint = MaxElemsPerBlock;      // 2 => mid point, 4 => quarter, MaxElemsPerBlock => 1
 
 
 /* Implementation notes: PQueue class
@@ -87,49 +88,25 @@ int PQueue::size()
  */
 void PQueue::enqueue(int newValue)
 {
-    cout << "PQueue::enqueue(" << newValue << "):";
+    //cout << "PQueue::enqueue(" << newValue << "):";
  	BlockT *cur, *prev;
     //int *newOne = new int[MaxElemsPerBlock];
  	
     if (head == NULL) {
-        cout << "New Head:";
+        //cout << "New Head:";
         head = new BlockT;
         head->block = new int[MaxElemsPerBlock];
-        head->first = MaxElemsPerBlock/2;  // Mid-point insertion strategy
-        head->last =  MaxElemsPerBlock/2;
+        head->first = MaxElemsPerBlock/InsertionPoint;  // Mid-point insertion strategy
+        head->last =  MaxElemsPerBlock/InsertionPoint;
         head->block[head->first] = newValue;
         head->next = NULL;
         return;
     }
     
-    //Find block: iterate over blocks until newValue > block[firstElem]
-    //  if firstElem > 0,
-    //    if block full
-    //          create new block
-    //          split current block
-    //    insert before firstElem in current block
-    //  
-    //  if firstElem == 0
-    //  Insert into previous block:
-    //    if block full
-    //          create new block
-    //          split current block
-    //    insert before firstElem in current block
-    //    
-    //Inserting:
-    //   Find insertion point
-    //      element = firstElem
-    //      for all elements (from bottom); check next elem
-    //        if newValue > block[element] 
-    //          if firstElem > 0
-    //            shift elements up
-    //          else 
-    //            shift elements down
-    //          insert newValue in current cell
-    
  	for (prev = NULL, cur = head; cur != NULL; prev=cur, cur = cur->next) {
- 		if (newValue > cur->block[cur->first]) {
-            // Go to previous block and insert element there
+        if (newValue > cur->block[cur->first] && cur->first == 0) {
+            //cout << " Scanned: Go to previous block and insert element there" << endl;
+            //cout << "  ************ prev = " << prev << " (Address " << cur << ")" << " next = " << cur->next << endl;
             if (prev) 
                 cur = prev;
             else {
@@ -137,45 +114,79 @@ void PQueue::enqueue(int newValue)
             }
             break;
         }
- 	}
-    
-    if (cur == NULL) { // Back of the list
-        cur = prev;
-    }
-    
-//    if (bSize(cur) == MaxElemsPerBlock) {
-//        cout << " Handling case size()==Max (Create New Block Before)" << endl;
-//        BlockT * newBlock = new BlockT;
-//        BlockT * forwardBlock = cur;
-//        newBlock->block = new int[MaxElemsPerBlock];
-//        newBlock->next = cur->next;
-//        cur = newBlock;
-//        cur->first = MaxElemsPerBlock/2;  // Mid-point insertion strategy
-//        cur->last =  MaxElemsPerBlock/2;
-//        cur->block[cur->first] = newValue;
-//        cur->next = forwardBlock;
-//        if (prev == NULL) {
-//            head = cur;
-//        }
-//        else {
-//            prev->next = cur;
-//        }
-//    }
-    if (newValue > cur->block[cur->first]) {
-        if (cur->first > 0) { 
-            cur->first -= 1;
-            cur->block[cur->first] = newValue;
+        else if (newValue > cur->block[cur->first] && cur->first != 0
+                                                   && prev != NULL && newValue < prev->block[prev->last]) {
+            //cout << " Scanned: Insert element at top of current block" << endl;
+            //cout << "  ************ prev = " << prev << " (Address " << cur << ")" << " next = " << cur->next << endl;
+            break;
+        }
+        
+        else if (newValue > cur->block[cur->first] && cur->first != 0
+                                                   && prev != NULL && newValue >= prev->block[prev->last]) {
+            //cout << " Scanned: Insert element at bottom of previous block" << endl;
+            //cout << "  ************ prev = " << prev << " (Address " << cur << ")" << " next = " << cur->next << endl;
+            cur = prev;
+            break;
+        }
+        else if (newValue > cur->block[cur->first] && cur->first != 0) {
+            //cout << " Scanned: Insert element at top of current block, prev is NULL" << endl;
+            //cout << "  ************ prev = " << prev << " (Address " << cur << ")" << " next = " << cur->next << endl;
+            break;
+        }
+        else if (newValue == cur->block[cur->last] && cur->last == MaxElemsPerBlock-1 && cur->next != NULL && cur->next->first != 0) {
+            //cout << " Scanned: Insert element at top of next block" << endl;
+            //cout << "  ************ prev = " << prev << " (Address " << cur << ")" << " next = " << cur->next << endl;
+            cur = cur->next;
+            break;
+        }
+        else if (newValue == cur->block[cur->last] && cur->next == NULL) {
+            //cout << " Scanned: TODO: Handle cur last tie >> need to create a new block" << endl;
+            //cout << "  ************ prev = " << prev << " (Address " << cur << ")" << " next = " << cur->next << endl;
+            //break;
+        }
+
+        else if (cur->next == NULL) {
+            //cout << " Scanned: Normal Case Insert @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+            //cout << "  ************ prev = " << prev << " (Address " << cur << ")" << " next = " << cur->next << endl;
+//            if (prev) 
+//                cur = prev;
+//            else {
+//                cur = head;
+//            }
+            break;
+ 
         }
         else {
-            cout << " Handling Block First Overflow: Create New Block Before)" << endl;
+            //cout << " Scanned: Skipping to next Block" << endl;
+            //cout << "  ************ prev = " << prev << " (Address " << cur << ")" << " next = " << cur->next << endl;
+        }
+ 	}
+    
+    if (cur == NULL) {
+        cur = prev;
+        //cout << ": Hit back of linked-list: ";
+    }
+    
+    //cout << "   **AFTER SCAN PROCESSING** prev = " << prev << " (Address " << cur << ")" << " next = " << cur->next << endl;
+    
+    if (newValue > cur->block[cur->first]) {
+        if (cur->first > 0) { 
+            //cout << " Handling Insert before first element in current block)" << endl;
+            cur->first -= 1;
+            cur->block[cur->first] = newValue;
+            //cout << ":CurrentBlockSize=" << bSize(cur) << ":";
+        }
+        else {
+            //cout << " Handling Block First Overflow: Create New Block Before)" << endl;
             BlockT * newBlock = new BlockT;
             BlockT * forwardBlock = cur;
             newBlock->block = new int[MaxElemsPerBlock];
             newBlock->next = cur->next;
             cur = newBlock;
-            cur->first = MaxElemsPerBlock/2;  // Mid-point insertion strategy
-            cur->last =  MaxElemsPerBlock/2;
+            cur->first = MaxElemsPerBlock/InsertionPoint;  // point insertion strategy
+            cur->last =  MaxElemsPerBlock/InsertionPoint;
             cur->block[cur->first] = newValue;
+            //cout << ":CurrentBlockSize=" << bSize(cur) << ":";
             cur->next = forwardBlock;
             if (prev == NULL) {
                 head = cur;
@@ -188,6 +199,7 @@ void PQueue::enqueue(int newValue)
     else {
         for (int i = cur->last+1; i > cur->first ; i--) { // Find insertion point from bottom
             if (i < MaxElemsPerBlock) {
+                //cout << "  $$$$ Attempting InsertFromBottom on Block at address = " << cur << endl;
                 if (newValue > cur->block[i-1]) {
                     cur->block[i] = cur->block[i-1];
                     cur->block[i-1] = newValue;
@@ -195,20 +207,114 @@ void PQueue::enqueue(int newValue)
                 else {
                     cur->block[i] = newValue;
                     cur->last += 1;
+                    //cout << ":InsertFromBottom:CurrentBlockSize=" << bSize(cur) << ":";
                     break;
                 }
             }
+//            else if (newValue == cur->block[cur->last]) {
+//                //cout << "  InsertFromBottom for newValue == cur->block[cur->last] on Block at address = " << cur << endl;
+//                cur->block[cur->last+1] = newValue;
+//                cur->last += 1;
+//                //cout << ":::InsertFromBottom:CurrentBlockSize=" << bSize(cur) << ":";
+//                break; 
+//            }
             else {
-                cout << " Handling Block LAST Overflow: Create New Block After & Split Current, write new value in current)" << endl;
+                //cout << " Handling Block LAST Overflow: Create New Block After" << endl;
                 // TODO: Create New Block After & Split Current, write new value in current
                 BlockT * newBlock = new BlockT;
                 newBlock->block = new int[MaxElemsPerBlock];
-                newBlock->first = MaxElemsPerBlock/2;
-                newBlock->last = MaxElemsPerBlock/2;
-                newBlock->block[newBlock->first] = newValue;
-                newBlock->next = cur->next;
-                cur->next = newBlock;
                 
+                //if (cur->next == NULL && newValue < cur->block[cur->last]) { // Hit the back of linked list
+                if (newValue < cur->block[cur->last]) { // Hit the back of linked list
+                    //cout << "Do not Split Current & write newValue in newBlock" << endl;
+                    newBlock->first = MaxElemsPerBlock/InsertionPoint;  // Insertion-point insertion strategy
+                    newBlock->last =  MaxElemsPerBlock/InsertionPoint;
+                    newBlock->block[newBlock->first] = newValue;
+                    //cout << ":NewBlockSize=" << bSize(newBlock) << ":";
+                    newBlock->next = cur->next; // NULL
+                    cur->next = newBlock;
+                }
+                else if (bSize(cur) > 1) {
+                    //cout << "Split Current where newValue has priority & write newValue in current" << endl;
+                    newBlock->first = MaxElemsPerBlock/InsertionPoint; // Quarter-Point Insertion
+                    newBlock->last = newBlock->first;
+                    if (newValue != cur->block[cur->last]) {
+                        //cout << " >> Normal Split" << endl;
+                        int i;
+                        int transferCount = 0;
+                        for (i = cur->last; ; i--) {
+                            //cout << " Compare: newValue=" << newValue << " > " << "cur->block[" << i << "]=" << cur->block[i] << endl;
+                            if (newValue > cur->block[i]) {
+                                transferCount++;
+                            }
+                            else {
+                                //cout << "   Finished Transfer List at i = " << i << endl;
+                                break;
+                            }
+                        }
+                        i++;
+                        int curNewLast = i;
+                        newBlock->first = MaxElemsPerBlock - transferCount;
+                        if (MaxElemsPerBlock - transferCount > MaxElemsPerBlock/2)
+                            newBlock->first = MaxElemsPerBlock/InsertionPoint;
+                        
+                        //cout << "TransferCount=" << transferCount << endl;
+                        //cout << "Cur to New starting New @:" << newBlock->first << ":";
+                        int j = 0;
+                        for (; i <= cur->last; i++, j++) {
+                            //cout << cur->block[i] << " ";
+                            newBlock->block[newBlock->first + j] = cur->block[i];
+                        }
+                        newBlock->last = newBlock->first + j - 1;
+                        newBlock->next = cur->next;
+                        cur->next = newBlock;
+                        cur->last = curNewLast;
+                        cur->block[curNewLast] = newValue;
+                        //cout << ":Writing newValue in cur[" << curNewLast << "]" << endl;
+                        //cout << ":CurrentBlockSize=" << bSize(cur) << ":";
+                        //cout << "NewBlockSize=" << bSize(newBlock) << ":";
+                    }
+                    else {
+                        //cout << " >> Split Not Possible in current: NewValue is equal to element at cur->last" << endl;
+                        //cout << " >> Check for cur->last growing beyond MaxElemPerBlock." << endl;
+                        //cout << " >> If so then create new if next block is full (TODO)" << endl;
+                        //cout << " TODO: Possible check for cur->last growing beyond MaxElemPerBlock, then create new" << endl;
+                        if (cur->next != NULL && cur->next->last < MaxElemsPerBlock-1) {
+                            //cout << "Do not Split Current & write newValue in next" << endl;
+                            delete newBlock;
+                            cur = cur->next;
+                            cur->last += 1;
+                            for (int i = cur->last; i > cur->first ; i--) { // Find insertion point from bottom
+                                if (i < MaxElemsPerBlock) {
+                                    //cout << "  (inner loop) Attempting InsertFromBottom on Block at address = " << cur << endl;
+                                    if (newValue > cur->block[i-1]) {
+                                        cur->block[i] = cur->block[i-1];
+                                        cur->block[i-1] = newValue;
+                                    }
+                                    else {
+                                        cur->block[i] = newValue;
+                                        //cur->last += 1;
+                                        //cout << " (inner loop):InsertFromBottom:CurrentBlockSize=" << bSize(cur) << ":";
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            //cout << "Current block full, create new Block & write newValue in newBlock" << endl;
+                            //cout << " >>> TODO: This places the most recent of a long consecutive set of ints before last few..." << endl;
+                            newBlock->first = MaxElemsPerBlock/InsertionPoint;  // Mid-point insertion strategy
+                            newBlock->last =  MaxElemsPerBlock/InsertionPoint;
+                            newBlock->block[newBlock->first] = newValue;
+                            //cout << ":NewBlockSize=" << bSize(newBlock) << ":";
+                            newBlock->next = cur->next;
+                            cur->next = newBlock;
+                        }
+                    }
+                }
+                else {
+                    //cout << "TODO: Readjust current since first=" << cur->first << "=last=" << cur->last << "=Max-1=" << MaxElemsPerBlock-1;
+                }
                 break;
             }
         }
@@ -231,9 +337,9 @@ int PQueue::dequeueMax()
  	int value = head->block[head->first];
     head->first += 1;
  	
-    cout << "PQueue::dequeueMax():first=" << head->first << ":last=" << head->last << "= ";
+    //cout << "PQueue::dequeueMax():first=" << head->first << ":last=" << head->last << "= ";
     if (head->first > head->last) {
-        cout << endl << "PQueue::dequeueMax(): deleting head = ";
+        //cout << endl << "PQueue::dequeueMax(): deleting head = ";
         head = head->next; 	// splice head cell out
         delete blockToBeDeleted;
         delete toBeDeleted;
@@ -271,15 +377,30 @@ string PQueue::implementationName()
  */
 void PQueue::printDebuggingInfo()
 {
-    int count = 0;
+    int blockCount = 0;
+    int elementCount = 0;
     
 	cout << "------------------ START DEBUG INFO ------------------" << endl;
 	for (BlockT *cur = head; cur != NULL; cur = cur->next) {
-        cout << "Block#" << count << " (at address " << cur << ") val = " << "TODO: insert value" // cur->value
-        << " next = " << cur->next << endl;
-        count++;
+        cout << "Block#" << blockCount << " (at address " << cur << ")" << " next = " << cur->next << endl;
+        if (cur != NULL) {
+            cout << " QUEUE START: ";
+            for (int i = cur->first; i <= cur->last; i++) {
+                cout << "[" << i << "]=" << cur->block[i] << " ";
+                elementCount++;
+            }
+            cout << ":QUEUE END" << endl;
+        }        
+        blockCount++; 
 	}
+    double occupancyRatio = (double) elementCount / (double) ((blockCount+1) * MaxElemsPerBlock);
+    cout << "        **** occupancyRatio = " << occupancyRatio << " **** " << endl;
 	cout << "------------------ END DEBUG INFO ------------------" << endl;
+}
+
+double occupancyRatio() {
+    
+    return 1.0;
 }
 
 int PQueue::bSize(BlockT *cur) {

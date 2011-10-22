@@ -121,6 +121,8 @@ class PQueue
 	 * doing development.
 	 */
 	void printDebuggingInfo();
+    
+    double occupancyRatio();
 
   private:
   
