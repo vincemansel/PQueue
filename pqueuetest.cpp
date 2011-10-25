@@ -94,7 +94,7 @@ void MorePQueueTest()
 	cout << endl << "This next test raises an error if your pqueue is working correctly." << endl;
 	cout << "Once you verify the test, comment it out to move on to the other tests." << endl;
 	cout << "(Comment out line " << __LINE__ + 1 << " in the file " << __FILE__ << ")." << endl;
-	//cout << "Dequeue from empty pqueue returns " << pq.dequeueMax() << endl;
+	cout << "Dequeue from empty pqueue returns " << pq.dequeueMax() << endl;
 
 	cout << endl << "Hit return to continue: ";
 	GetLine();

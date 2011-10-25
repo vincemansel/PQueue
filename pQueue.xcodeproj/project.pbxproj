@@ -12,7 +12,7 @@
 		A8634C05145070230089A982 /* performance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8634BFD145070230089A982 /* performance.cpp */; };
 		A8634C07145070230089A982 /* pqueuetest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8634C01145070230089A982 /* pqueuetest.cpp */; };
 		A87AE762143131920059B140 /* utility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A87AE761143131920059B140 /* utility.a */; };
-		A8F1894D1456479900E82503 /* pqHeap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8F1894C1456479900E82503 /* pqHeap.cpp */; };
+		A8F1894F14568EB300E82503 /* pqPriority_Queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8F1894E14568EB300E82503 /* pqPriority_Queue.cpp */; };
 		E3DDB4070D2F5EB100348E1D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3DDB4060D2F5EB100348E1D /* Carbon.framework */; };
 		E3DDB40C0D2F5EBE00348E1D /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3DDB40B0D2F5EBE00348E1D /* QuickTime.framework */; };
 /* End PBXBuildFile section */
@@ -29,7 +29,7 @@
 		A8634C0B1450A28A0089A982 /* pqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pqueue.h; sourceTree = "<group>"; };
 		A8634C0E1450A2C10089A982 /* vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector.h; sourceTree = "<group>"; };
 		A87AE761143131920059B140 /* utility.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = utility.a; path = utility/utility.a; sourceTree = "<group>"; };
-		A8F1894C1456479900E82503 /* pqHeap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pqHeap.cpp; sourceTree = "<group>"; };
+		A8F1894E14568EB300E82503 /* pqPriority_Queue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pqPriority_Queue.cpp; sourceTree = "<group>"; };
 		E3DDB4060D2F5EB100348E1D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		E3DDB40B0D2F5EBE00348E1D /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -60,7 +60,7 @@
 		29B97314FDCFA39411CA2CEA /* blank-project */ = {
 			isa = PBXGroup;
 			children = (
-				A8F1894C1456479900E82503 /* pqHeap.cpp */,
+				A8F1894E14568EB300E82503 /* pqPriority_Queue.cpp */,
 				A8634C0E1450A2C10089A982 /* vector.h */,
 				A8634C0B1450A28A0089A982 /* pqueue.h */,
 				A8634BFC145070230089A982 /* main.cpp */,
@@ -157,7 +157,7 @@
 				A8634C04145070230089A982 /* main.cpp in Sources */,
 				A8634C05145070230089A982 /* performance.cpp in Sources */,
 				A8634C07145070230089A982 /* pqueuetest.cpp in Sources */,
-				A8F1894D1456479900E82503 /* pqHeap.cpp in Sources */,
+				A8F1894F14568EB300E82503 /* pqPriority_Queue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

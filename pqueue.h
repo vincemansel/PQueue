@@ -6,13 +6,14 @@
  * Julie Zelenski, CS106, Fall 2007
  */
  
+
  
 #ifndef _pqueue_h
 #define _pqueue_h
 
 #include "genlib.h"
-#include "vector.h"
 #include "disallowcopy.h"
+#include <queue>
 
 /*
  * Class: PQueue
@@ -131,11 +132,14 @@ class PQueue
 	// copying would create unintended sharing.
 	// It's fine is to disallow copying for all implementations as
 	// a precaution
-	DISALLOW_COPYING(PQueue)
+	//DISALLOW_COPYING(PQueue)
 
   	/* This is the representation for the unsorted vector.
   	 * You will need to update this as you change representations. */
-	Vector<int> heap;
+    
+    priority_queue<int> prq;
+    
+	//Vector<int> heap;
 
 //    For pqChunkList implementation
 //    struct BlockT {
