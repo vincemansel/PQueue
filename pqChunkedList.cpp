@@ -96,7 +96,7 @@ void PQueue::enqueue(int newValue)
         //cout << "New Head:";
         head = new BlockT;
         head->block = new int[MaxElemsPerBlock];
-        head->first = MaxElemsPerBlock/InsertionPoint;  // Mid-point insertion strategy
+        head->first = MaxElemsPerBlock/InsertionPoint;  // Insertion strategy
         head->last =  MaxElemsPerBlock/InsertionPoint;
         head->block[head->first] = newValue;
         head->next = NULL;
@@ -183,7 +183,7 @@ void PQueue::enqueue(int newValue)
             newBlock->block = new int[MaxElemsPerBlock];
             newBlock->next = cur->next;
             cur = newBlock;
-            cur->first = MaxElemsPerBlock/InsertionPoint;  // point insertion strategy
+            cur->first = MaxElemsPerBlock/InsertionPoint;  // Insertion strategy
             cur->last =  MaxElemsPerBlock/InsertionPoint;
             cur->block[cur->first] = newValue;
             //cout << ":CurrentBlockSize=" << bSize(cur) << ":";
@@ -227,7 +227,7 @@ void PQueue::enqueue(int newValue)
                 //if (cur->next == NULL && newValue < cur->block[cur->last]) { // Hit the back of linked list
                 if (newValue < cur->block[cur->last]) { // Hit the back of linked list
                     //cout << "Do not Split Current & write newValue in newBlock" << endl;
-                    newBlock->first = MaxElemsPerBlock/InsertionPoint;  // Insertion-point insertion strategy
+                    newBlock->first = MaxElemsPerBlock/InsertionPoint;  // Insertion strategy
                     newBlock->last =  MaxElemsPerBlock/InsertionPoint;
                     newBlock->block[newBlock->first] = newValue;
                     //cout << ":NewBlockSize=" << bSize(newBlock) << ":";
@@ -236,7 +236,7 @@ void PQueue::enqueue(int newValue)
                 }
                 else if (bSize(cur) > 1) {
                     //cout << "Split Current where newValue has priority & write newValue in current" << endl;
-                    newBlock->first = MaxElemsPerBlock/InsertionPoint; // Quarter-Point Insertion
+                    newBlock->first = MaxElemsPerBlock/InsertionPoint; // Insertion Strategy
                     newBlock->last = newBlock->first;
                     if (newValue != cur->block[cur->last]) {
                         //cout << " >> Normal Split" << endl;
@@ -303,7 +303,7 @@ void PQueue::enqueue(int newValue)
                         else {
                             //cout << "Current block full, create new Block & write newValue in newBlock" << endl;
                             //cout << " >>> TODO: This places the most recent of a long consecutive set of ints before last few..." << endl;
-                            newBlock->first = MaxElemsPerBlock/InsertionPoint;  // Mid-point insertion strategy
+                            newBlock->first = MaxElemsPerBlock/InsertionPoint;  // Insertion strategy
                             newBlock->last =  MaxElemsPerBlock/InsertionPoint;
                             newBlock->block[newBlock->first] = newValue;
                             //cout << ":NewBlockSize=" << bSize(newBlock) << ":";
