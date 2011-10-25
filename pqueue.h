@@ -135,17 +135,18 @@ class PQueue
 
   	/* This is the representation for the unsorted vector.
   	 * You will need to update this as you change representations. */
-	//Vector<int> entries;
-    
-    struct BlockT {
-        int *block;
-        int first;
-        int last;
-        BlockT *next;
-    };
-    BlockT *head;
-    
-    int bSize(BlockT *cur);
+	Vector<int> heap;
+
+//    For pqChunkList implementation
+//    struct BlockT {
+//        int *block;
+//        int first;
+//        int last;
+//        BlockT *next;
+//    };
+//    BlockT *head;
+//    
+//    int bSize(BlockT *cur);
 
 };
 

@@ -19,11 +19,11 @@
 
 void EnQ(PQueue &pq, int value, int & count) {
     pq.enqueue(value);
-//    cout << "Size = " << pq.size() << ":" << ++count << endl;
+    //cout << "Size = " << pq.size() << ":" << ++count << endl;
     //pq.printDebuggingInfo();
 }
 void DeQ(PQueue &pq, int & count) {
-    //cout << "DeQ = " << pq.dequeueMax() << endl;
+    cout << "DeQ = " << pq.dequeueMax() << endl;
     //cout << "Size = " << pq.size() << ":" << --count << endl;
     //pq.printDebuggingInfo();
 }
@@ -33,14 +33,19 @@ int main()
 //    Randomize();
 //    PQueue basic;
 //    
-//    //cout << "Before Enqueue: IsEmpty = " << basic.isEmpty() << endl;
-//    //cout << "Before Enqueue: Size = " << basic.size() << endl;
+//    cout << "Before Enqueue: IsEmpty = " << basic.isEmpty() << endl;
+//    cout << "Before Enqueue: Size = " << basic.size() << endl;
 //
 //    int qSize = 0;
 //
-//    for (int i = 0; i < 1000; i++) {
+//    for (int i = 0; i < 100; i++) {
 //        EnQ(basic,RandomInteger(1, 500),qSize);
 //    }
+//    
+//    for (int i = 0; i < 100
+//         ; i++)
+//        DeQ(basic, qSize);
+    
     
 	BasicPQueueTest();
 	MorePQueueTest();
