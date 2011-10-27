@@ -14,9 +14,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8D1107260486CEB800E47090"
-               BuildableName = "pQueue.app"
-               BlueprintName = "pQueue"
-               ReferencedContainer = "container:pQueue.xcodeproj">
+               BuildableName = "pQueueT.app"
+               BlueprintName = "pQueueT"
+               ReferencedContainer = "container:pQueueT.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,9 +32,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D1107260486CEB800E47090"
-            BuildableName = "pQueue.app"
-            BlueprintName = "pQueue"
-            ReferencedContainer = "container:pQueue.xcodeproj">
+            BuildableName = "pQueueT.app"
+            BlueprintName = "pQueueT"
+            ReferencedContainer = "container:pQueueT.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -50,9 +50,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D1107260486CEB800E47090"
-            BuildableName = "pQueue.app"
-            BlueprintName = "pQueue"
-            ReferencedContainer = "container:pQueue.xcodeproj">
+            BuildableName = "pQueueT.app"
+            BlueprintName = "pQueueT"
+            ReferencedContainer = "container:pQueueT.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D1107260486CEB800E47090"
-            BuildableName = "pQueue.app"
-            BlueprintName = "pQueue"
-            ReferencedContainer = "container:pQueue.xcodeproj">
+            BuildableName = "pQueueT.app"
+            BlueprintName = "pQueueT"
+            ReferencedContainer = "container:pQueueT.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

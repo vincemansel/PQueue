@@ -1,15 +1,12 @@
 /* File: main.cpp
  * --------------
- * Simple main module for PQueue assignment.
+ * Simple main module for PQueueT testing.
  */
  
-#include "pqueuetest.h"
-#include "performance.h"
 #include <iostream>
 #include "genlib.h"
-#include "pqueue.h"
+#include "pqueueT.h"
 #include "random.h"
-
 
 /*
  * Use these functions to test your PQueue implementation.
@@ -17,173 +14,148 @@
  * while you are mid-development.
  */
 
-void EnQ(PQueue &pq, int value, int & count) {
+void StructTest();
+void VectorTest();
+
+int main()
+{
+    Randomize();
+        
+    //StructTest();
+    VectorTest();
+   
+    return (0);
+}
+
+// Test routines for Vector of structs test as pqueueT template type
+
+struct testT1 {
+    int priority;
+    string name;
+};
+
+void EnQ1(PQueueT<Vector<testT1> > &pq, Vector<testT1> value, int & count) {
     pq.enqueue(value);
     //cout << "Size = " << pq.size() << ":" << ++count << endl;
     //pq.printDebuggingInfo();
 }
-void DeQ(PQueue &pq, int & count) {
-    cout << "DeQ = " << pq.dequeueMax() << endl;
+void DeQ1(PQueueT<Vector<testT1> > &pq, int & count) {
+    cout << "DeQ = " << pq.dequeueMax().size() << endl;
     //cout << "Size = " << pq.size() << ":" << --count << endl;
     //pq.printDebuggingInfo();
 }
 
-int main()
-{
-//    Randomize();
-//    PQueue basic;
-//    
-//    cout << "Before Enqueue: IsEmpty = " << basic.isEmpty() << endl;
-//    cout << "Before Enqueue: Size = " << basic.size() << endl;
-//
-//    int qSize = 0;
-//
-//    for (int i = 0; i < 100; i++) {
-//        EnQ(basic,RandomInteger(1, 500),qSize);
-//    }
-//    
-//    for (int i = 0; i < 100
-//         ; i++)
-//        DeQ(basic, qSize);
-    
-    
-	BasicPQueueTest();
-	MorePQueueTest();
-	PQueueSortTest();
-   	PQueuePerformance();
-    cout << endl << "Goodbye and have a nice day!" << endl;
-    return (0);
+int MoreElementsFirst(Vector<testT1> one, Vector<testT1> two) {
+	if (one.size() == two.size()) return 0;
+	if (one.size() < two.size()) return -1;
+	return 1;
 }
 
-void testCode(PQueue &basic, int qSize) {
-    EnQ(basic,66,qSize);
-    EnQ(basic,67,qSize);
-    EnQ(basic,55,qSize);
-    EnQ(basic,33,qSize);
-    EnQ(basic,44,qSize);
-    EnQ(basic,22,qSize);
-    EnQ(basic,11,qSize);
-    EnQ(basic,77,qSize);
-    EnQ(basic,88,qSize);
-    EnQ(basic,99,qSize);
-    EnQ(basic,1010,qSize);
-    EnQ(basic,1313,qSize);
-    EnQ(basic,1000,qSize);
-    EnQ(basic,1414,qSize);
-    EnQ(basic,1212,qSize);
-    EnQ(basic,1211,qSize);
-    EnQ(basic,1210,qSize);
-    EnQ(basic,1209,qSize);
-    EnQ(basic,1208,qSize);
-    EnQ(basic,1207,qSize);
-    EnQ(basic,1005,qSize);
+int FewerElementsFirst(Vector<testT1> one, Vector<testT1> two) {
+    if (one.size() == two.size()) return 0;
+    if (one.size() > two.size()) return -1;
+    return 1;
+}
+
+void VectorTest() {
     
+    Vector<testT1> vt1;
+    Vector<testT1> vt2;
     
-    cout << endl;
-    cout << "IsEmpty = " << basic.isEmpty() << endl;
-    cout << "Size = " << basic.size() << endl;
-    cout << endl;
+    PQueueT<Vector<testT1> > basic(FewerElementsFirst);
     
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
+    cout << "Before Enqueue: IsEmpty = " << basic.isEmpty() << endl;
+    cout << "Before Enqueue: Size = " << basic.size() << endl;
     
-    cout << endl;
+    basic.printDebuggingInfo();
     
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
-    EnQ(basic,34,qSize);
+    int qSize = 0;
     
+    for (int i = 0; i < 10; i++) {
+        testT1 t;
+        int item = RandomInteger(1001, 2001);
+        t.name = "name" + IntegerToString(item);
+        t.priority = item;
+        vt1.add(t);
+    }
     
+    EnQ1(basic,vt1,qSize);
+    basic.printDebuggingInfo();
     
-    EnQ(basic,2221,qSize);
-    EnQ(basic,10,qSize);
-    EnQ(basic,-11,qSize);
+    for (int i = 0; i < 20; i++) {
+        testT1 t;
+        int item = RandomInteger(5001, 7001);
+        t.name = "name" + IntegerToString(item);
+        t.priority = item;
+        vt2.add(t);
+    }
     
-    cout << endl;    DeQ(basic, qSize);    
-    DeQ(basic, qSize);
-    EnQ(basic,32,qSize);
-    EnQ(basic,23,qSize);
-    EnQ(basic,31,qSize);
-    EnQ(basic,30,qSize);
-    EnQ(basic,29,qSize);
-    EnQ(basic,28,qSize);
-    EnQ(basic,25,qSize);
-    EnQ(basic,26,qSize);
-    DeQ(basic, qSize);
-    EnQ(basic,1212,qSize);
-    EnQ(basic,1313,qSize);
-    EnQ(basic,70,qSize);
-    EnQ(basic,68,qSize);
-    EnQ(basic,71,qSize);
-    EnQ(basic,1414,qSize);
-    EnQ(basic,7,qSize);
+    EnQ1(basic,vt2,qSize);
+    basic.printDebuggingInfo();
     
-    cout << endl;
+    for (int i = 0; i < 2; i++)
+        DeQ1(basic, qSize);
+}
+
+//****************************************************//
+
+// Test routines for struct test as pqueueT template type
+
+struct testT {
+    int priority;
+    string name;
+};
+
+void EnQ(PQueueT<testT> &pq, testT value, int & count) {
+    pq.enqueue(value);
+    //cout << "Size = " << pq.size() << ":" << ++count << endl;
+    //pq.printDebuggingInfo();
+}
+void DeQ(PQueueT<testT> &pq, int & count) {
+    cout << "DeQ = " << pq.dequeueMax().name << endl;
+    //cout << "Size = " << pq.size() << ":" << --count << endl;
+    //pq.printDebuggingInfo();
+}
+
+int HigherPriorityFirst(testT one, testT two) {
+	if (one.priority == two.priority) return 0;
+	if (one.priority < two.priority) return -1;
+	return 1;
+}
+
+int LowerPriorityFirst(testT one, testT two) {
+	if (one.priority == two.priority) return 0;
+	if (one.priority > two.priority) return -1;
+	return 1;
+}
+
+int LowerNameFirst(testT one, testT two) {
+	if (one.name == two.name) return 0;
+	if (one.name > two.name) return -1;
+	return 1;
+}
+
+void StructTest() {
+    PQueueT<testT> basic(LowerNameFirst);
     
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
+    cout << "Before Enqueue: IsEmpty = " << basic.isEmpty() << endl;
+    cout << "Before Enqueue: Size = " << basic.size() << endl;
     
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
-    DeQ(basic, qSize);
+    basic.printDebuggingInfo();
+    
+    int qSize = 0;
+    
+    for (int i = 0; i < 10; i++) {
+        testT t;
+        int item = RandomInteger(1001, 2001);
+        t.name = "name" + IntegerToString(item);
+        t.priority = item;
+        EnQ(basic,t,qSize);
+    }
+    
+    basic.printDebuggingInfo();
+    
+    for (int i = 0; i < 10
+         ; i++)
+        DeQ(basic, qSize);
 }
